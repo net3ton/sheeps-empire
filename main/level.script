@@ -2,14 +2,16 @@ local COUNTX = 3
 local COUNTY = 2
 
 function init(self)
-	self.size = vmath.vector3(800, 600, 0)
+	--msg.post("@render:", "clear_color", { color = vmath.vector4(0.1, 0.2, 0, 0) } )
+
+	self.size = vmath.vector4(800, 600, 0, 0)
 	self.sheds = {}
 
 	initSheds(self)
 end
 
 function initSheds(self)
-	--math.randomseed(os.time())
+	math.randomseed(os.time())
 
 	local width = self.size.x / COUNTX
 	local height = self.size.y / COUNTY
@@ -21,12 +23,30 @@ function initSheds(self)
 			local x = math.random((ix-1) * width + xoff, ix * width - xoff * 2)
 			local y = math.random((iy-1) * height + yoff, iy * height - yoff * 2)
 
-			local pos = vmath.vector3(x, y, 0)
+			local pos = vmath.vector3(x, y, 0.5)
 			table.insert(self.sheds, pos)
 			
 			factory.create("#factory", pos)
 		end
 	end
+
+	go.set("#back", "scale.x", self.size.x)
+	go.set("#back", "scale.y", self.size.y)
+	go.set_position(vmath.vector3(self.size.x/2, self.size.y/2, 0))
+
+	sprite.set_constant("#back", "resolution", self.size)
+
+	sprite.set_constant("#back", "shed0", getPos(self, 1))
+	sprite.set_constant("#back", "shed1", getPos(self, 3))
+	sprite.set_constant("#back", "shed2", getPos(self, 5))
+end
+
+function getPos(self, num)
+	local x0 = self.sheds[num].x / self.size.y
+	local y0 = self.sheds[num].y / self.size.y
+	local x1 = self.sheds[num+1].x / self.size.y
+	local y1 = self.sheds[num+1].y / self.size.y
+	return vmath.vector4(x0, y0, x1, y1)
 end
 
 --function update(self, dt)

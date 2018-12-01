@@ -7,6 +7,9 @@ images {
 images {
   image: "/images/shed.png"
 }
+images {
+  image: "/images/empty.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

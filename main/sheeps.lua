@@ -3,11 +3,11 @@ local Sheeps = {}
 Sheeps.units = {}
 
 local MAX_SPEED = 30.0
-local MAX_ACCEL = 5.0
+local MAX_ACCEL = 2.0
 
 local MIN_DIST = 15.0
 local MIN_DIST_S = MIN_DIST * MIN_DIST
-local MAX_VISION = 50.0 * 50.0
+local MAX_VISION = 100.0 * 100.0
 
 function Sheeps.add(sheep_id)
 	table.insert(Sheeps.units, sheep_id)
@@ -34,8 +34,22 @@ function Sheeps.moveFlag(flag_pos)
 		end
 	end
 
-	if sheep ~= 0 then
-		msg.post(sheep, "flag", { pos = flag_pos })
+	--if sheep ~= 0 then
+	--	msg.post(sheep, "flag", { pos = flag_pos })
+	--end
+
+	if sheep == 0 then
+		return
+	end
+	
+	local sheepPos = go.get_position(sheep)
+
+	for _, sid in pairs(Sheeps.units) do
+		local spos = go.get_position(sid)
+		local dist = vmath.length_sqr(sheepPos - spos)
+		if dist < (25 * 25) then
+			msg.post(sid, "flag", { pos = flag_pos })
+		end
 	end
 end
 
@@ -64,6 +78,7 @@ function Sheeps.proccess(sheep_id)
 	local velCollision = vmath.vector3()
 
 	local countVision = 0
+	local countCentering = 0
 	local countCollision = 0
 
 	local sheepPos = go.get_position(sheep_id)
@@ -80,7 +95,7 @@ function Sheeps.proccess(sheep_id)
 				-- velocity matching
 				velMatching = velMatching + svel
 				-- position centering
-				posCentering = posCentering + spos
+				--posCentering = posCentering + spos
 
 				-- collision avoidance
 				if Sheeps.inTooClose(sheepPos, spos) then
@@ -89,6 +104,9 @@ function Sheeps.proccess(sheep_id)
 					local dir = sheepPos - spos
 					local length = vmath.length(dir)
 					velCollision = velCollision + dir * (MIN_DIST - length)
+				else
+					countCentering = countCentering + 1
+					posCentering = posCentering + spos
 				end
 			end
 		end
@@ -104,9 +122,11 @@ function Sheeps.proccess(sheep_id)
 		accelAligment = Sheeps.limitVectorLength(velMatching - sheepVel, MAX_ACCEL)
 
 		-- centering acceleration
-		posCentering = posCentering * (1.0 / countVision)
-		local velCentering = vmath.normalize(posCentering - sheepPos) * MAX_SPEED
-		accelCentering = Sheeps.limitVectorLength(velCentering - sheepVel, MAX_ACCEL)
+		if countCentering > 0 then
+			posCentering = posCentering * (1.0 / countCentering)
+			local velCentering = vmath.normalize(posCentering - sheepPos) * MAX_SPEED
+			accelCentering = Sheeps.limitVectorLength(velCentering - sheepVel, MAX_ACCEL)
+		end
 
 		-- collision avoidance acceleration
 		if countCollision > 0 then
@@ -115,7 +135,7 @@ function Sheeps.proccess(sheep_id)
 		end
 	end
 
-	local accel = accelAligment * 1.0 + accelCentering * 1.0 + accelCollision * 3.0
+	local accel = accelAligment * 1.0 + accelCentering * 1.0 + accelCollision * 1.5
 	msg.post(sheep_id, "acceleration", { accel = accel })
 end
 
