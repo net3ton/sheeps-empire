@@ -4,6 +4,9 @@ images {
 images {
   image: "/images/flag.png"
 }
+images {
+  image: "/images/shed.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

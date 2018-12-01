@@ -1,6 +1,6 @@
 components {
   id: "script"
-  component: "/main/sheep.script"
+  component: "/main/level.script"
   position {
     x: 0.0
     y: 0.0
@@ -14,12 +14,10 @@ components {
   }
 }
 embedded_components {
-  id: "sprite"
-  type: "sprite"
-  data: "tile_set: \"/images/main.atlas\"\n"
-  "default_animation: \"sheep\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
+  id: "factory"
+  type: "factory"
+  data: "prototype: \"/main/shed.go\"\n"
+  "load_dynamically: false\n"
   ""
   position {
     x: 0.0

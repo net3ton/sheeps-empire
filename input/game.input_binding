@@ -1,4 +1,8 @@
+key_trigger {
+  input: KEY_SPACE
+  action: "add"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT
-  action: ""
+  action: "mouse_left"
 }
