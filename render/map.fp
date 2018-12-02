@@ -8,6 +8,10 @@ uniform lowp vec4 shed0;
 uniform lowp vec4 shed1;
 uniform lowp vec4 shed2;
 
+float rand(vec2 co){
+	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
 void main()
 {
 	// Pre-multiply alpha since all runtime textures already are
@@ -39,7 +43,10 @@ void main()
 		min_dist = min(dist, min_dist);
 	}
 
-	color += min_dist/1.5;
+	if (rand(st) > 0.5)
+		color += min_dist/1.5;
+	else
+		color = vec3(.11, .37, .13) + min_dist;
 	
 	gl_FragColor = vec4(color, 1.0);
 }

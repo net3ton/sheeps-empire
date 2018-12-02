@@ -1,9 +1,10 @@
 local Sheeps = {}
 
 Sheeps.units = {}
+Sheeps.count = 0
 
 local MAX_SPEED = 30.0
-local MAX_ACCEL = 2.0
+local MAX_ACCEL = 25.0
 
 local MIN_DIST = 15.0
 local MIN_DIST_S = MIN_DIST * MIN_DIST
@@ -11,9 +12,11 @@ local MAX_VISION = 100.0 * 100.0
 
 function Sheeps.add(sheep_id)
 	table.insert(Sheeps.units, sheep_id)
+	Sheeps.count = Sheeps.count + 1
+	print(Sheeps.count)
 end
 
-function Sheeps.update()
+function Sheeps.update(dt)
 	for _, sid in pairs(Sheeps.units) do
 		Sheeps.proccess(sid)
 	end
@@ -64,8 +67,9 @@ end
 function Sheeps.limitVectorLength(vec, limit)
 	local length = vmath.length(vec)
 	if length > limit then
-		vec.x = (vec.x / length) * limit
-		vec.y = (vec.y / length) * limit
+		--vec.x = (vec.x / length) * limit
+		--vec.y = (vec.y / length) * limit
+		return vec * (limit / length)
 	end
 
 	return vec
@@ -93,20 +97,23 @@ function Sheeps.proccess(sheep_id)
 				countVision = countVision + 1
 				
 				-- velocity matching
-				velMatching = velMatching + svel
-				-- position centering
-				--posCentering = posCentering + spos
+				--velMatching = velMatching + svel
+				velMatching.x = velMatching.x + svel.x
+				velMatching.y = velMatching.y + svel.y
 
-				-- collision avoidance
 				if Sheeps.inTooClose(sheepPos, spos) then
+					-- collision avoidance
 					countCollision = countCollision + 1
 
 					local dir = sheepPos - spos
 					local length = vmath.length(dir)
 					velCollision = velCollision + dir * (MIN_DIST - length)
 				else
+					-- position centering
 					countCentering = countCentering + 1
-					posCentering = posCentering + spos
+					--posCentering = posCentering + spos
+					posCentering.x = posCentering.x + spos.x
+					posCentering.y = posCentering.y + spos.y
 				end
 			end
 		end
@@ -135,8 +142,9 @@ function Sheeps.proccess(sheep_id)
 		end
 	end
 
-	local accel = accelAligment * 1.0 + accelCentering * 1.0 + accelCollision * 1.5
-	msg.post(sheep_id, "acceleration", { accel = accel })
+	local accel = accelAligment * 0.5 + accelCentering * 1.0 + accelCollision * 1.5
+	--msg.post(sheep_id, "acceleration", { accel = accel })
+	go.set(msg.url("main", sheep_id, "script"), "accel", accel)
 end
 
 return Sheeps

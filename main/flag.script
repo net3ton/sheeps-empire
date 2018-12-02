@@ -9,12 +9,12 @@ end
 
 function update(self, dt)
 	local sheeps = require "main.sheeps"
-	sheeps.update()
+	sheeps.update(dt)
 end
 
 function on_input(self, action_id, action)
-	self.mpos.x = action.x
-	self.mpos.y = action.y
+	self.mpos.x = action.x / 2
+	self.mpos.y = action.y / 2
 	
 	if action_id == hash("add") and action.pressed then
 		local sheeps = require "main.sheeps"
@@ -24,7 +24,7 @@ function on_input(self, action_id, action)
 
 	if action_id == hash("mouse_left") and action.pressed then
 		local sheeps = require "main.sheeps"
-		local fpos = vmath.vector3(action.x, action.y, 0)
+		local fpos = vmath.vector3(action.x/2, action.y/2, 0)
 		go.set_position(fpos)
 		sheeps.moveFlag(fpos)
 	end

@@ -4,7 +4,7 @@ local COUNTY = 2
 function init(self)
 	--msg.post("@render:", "clear_color", { color = vmath.vector4(0.1, 0.2, 0, 0) } )
 
-	self.size = vmath.vector4(800, 600, 0, 0)
+	self.size = vmath.vector4(400, 300, 0, 0)
 	self.sheds = {}
 
 	initSheds(self)
@@ -34,7 +34,7 @@ function initSheds(self)
 	go.set("#back", "scale.y", self.size.y)
 	go.set_position(vmath.vector3(self.size.x/2, self.size.y/2, 0))
 
-	sprite.set_constant("#back", "resolution", self.size)
+	sprite.set_constant("#back", "resolution", self.size * 2)
 
 	sprite.set_constant("#back", "shed0", getPos(self, 1))
 	sprite.set_constant("#back", "shed1", getPos(self, 3))
