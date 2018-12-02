@@ -20,12 +20,22 @@ function Sheeps.add(sheep_id)
 	end
 end
 
+function Sheeps.remove(sheep_id)
+	for ind, sid in pairs(Sheeps.units) do
+		if sid == sheep_id then
+			table.remove(Sheeps.units, ind)
+			return
+		end
+	end
+end
+
 function Sheeps.update(dt)
 	for _, sid in pairs(Sheeps.units) do
 		Sheeps.proccess(sid)
 	end
 end
 
+--[[
 function Sheeps.explosion(sheepId)
 	local sheepPos = go.get_position(sheepId)
 	local sheedInd = nil
@@ -46,7 +56,9 @@ function Sheeps.explosion(sheepId)
 	table.remove(Sheeps.units, sheedInd)
 	go.delete(sheepId)
 end
+]]
 
+--[[
 function Sheeps.explo(ind)
 	local sheepId = Sheeps.units[ind]
 	local sheepPos = go.get_position(sheepId)
@@ -72,6 +84,7 @@ function Sheeps.explo(ind)
 	sheepId = Sheeps.units[ind]
 	msg.post(sheepId, "black")
 end
+]]
 
 function Sheeps.findNearest(to_pos)
 	local min = -1
@@ -152,8 +165,9 @@ function Sheeps.proccess(sheep_id)
 	local countCentering = 0
 	local countCollision = 0
 
+	local sheedUrl = msg.url("main", sheep_id, "script")
 	local sheepPos = go.get_position(sheep_id)
-	local sheepVel = go.get(msg.url("main", sheep_id, "script"), "velocity")
+	local sheepVel = go.get(sheedUrl, "velocity")
 
 	for _, sid in pairs(Sheeps.units) do
 		if sid ~= sheep_id then
@@ -215,8 +229,7 @@ function Sheeps.proccess(sheep_id)
 	end
 
 	local accel = accelAligment * 0.5 + accelCentering * 1.0 + accelCollision * 1.5
-	--msg.post(sheep_id, "acceleration", { accel = accel })
-	go.set(msg.url("main", sheep_id, "script"), "accel", accel)
+	go.set(sheedUrl, "accel", accel)
 end
 
 return Sheeps

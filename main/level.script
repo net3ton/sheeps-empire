@@ -59,14 +59,12 @@ function initSheeps(self)
 end
 
 function update(self, dt)
-	--[[
 	self.delay = self.delay - dt
 
 	if self.delay < 0 then
 		self.delay = ENEMY_DELAY
 		spawnEnemy(self)
 	end
-	]]
 end
 
 function spawnEnemy(self)

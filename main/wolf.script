@@ -24,8 +24,9 @@ function update(self, dt)
 		local tpos = go.get_position(self.target)
 		if checkCatch(self, tpos) then
 			go.delete()
-			local sheeps = require "main.sheeps"
-			sheeps.explosion(self.target)
+			go.delete(self.target)
+			--local sheeps = require "main.sheeps"
+			--sheeps.explosion(self.target)
 			return
 		end
 
