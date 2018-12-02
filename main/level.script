@@ -23,7 +23,7 @@ function initSheds(self)
 			local x = math.random((ix-1) * width + xoff, ix * width - xoff * 2)
 			local y = math.random((iy-1) * height + yoff, iy * height - yoff * 2)
 
-			local pos = vmath.vector3(x, y, 0.5)
+			local pos = vmath.vector3(x, y, 0)
 			table.insert(self.sheds, pos)
 			
 			factory.create("#factory", pos)

@@ -10,6 +10,9 @@ images {
 images {
   image: "/images/empty.png"
 }
+images {
+  image: "/images/shed_shadow.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

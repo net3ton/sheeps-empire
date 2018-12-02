@@ -29,8 +29,8 @@ void main()
 	point[4] = shed2.xy;
 	point[5] = shed2.zw;
 
-	//vec3 color = vec3(.11, .37, .13);
-	vec3 color = vec3(.05, .17, .06);
+	vec3 color = vec3(.11, .37, .13);
+	//vec3 color = vec3(.05, .17, .06);
 	float min_dist = 1.0;
 	
 	for (int i=0; i<6; i++)
@@ -39,7 +39,7 @@ void main()
 		min_dist = min(dist, min_dist);
 	}
 
-	color += min_dist/2.5;
+	color += min_dist/1.5;
 	
 	gl_FragColor = vec4(color, 1.0);
 }
