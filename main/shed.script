@@ -1,49 +1,51 @@
-go.property("side", 0)
+go.property("charged", false)
 
-local CAPTURE_COUNT = 5
-local REGEN_TIME = 10
+local SPAWN_COUNT = 5
+local MINDIST_SQ = 20 * 20
 
 function init(self)
-	self.regen = 0
-	showFlag(self, self.side);
+	self.checkTime = 1.0
+	showFlag(self, false)
 end
 
-function showFlag(self, side)
-	if side == 1 then
+function showFlag(self, show)
+	if show then
 		msg.post("#flag", "enable")
 	else
 		msg.post("#flag", "disable")
 	end
 end
 
-function setSide(self, side)
-	if self.side ~= side and side == 1 then
-		spawnSheeps(self, CAPTURE_COUNT)
+function setCharged(self, charge)
+	showFlag(self, charge)
+
+	if self.charged ~= charge and self.charged then
+		makeSheeps(self)
 	end
-	
-	self.side = side
-	self.regen = REGEN_TIME
-	showFlag(self, side);
+
+	self.charged = charge
+	self.checkTime = 1.0
+	showFlag(self, charge);
 end
 
-function spawnSheeps(self, count)
-	msg.post("/flag#script", "new_sheeps", { pos = go.get_position(), count = count })
+function makeSheeps(self)
+	msg.post("/level#script", "spawn_sheeps", { pos = go.get_position(), count = SPAWN_COUNT })
 end
 
 function update(self, dt)
-	--[[
-	if self.side == 1 then
-		self.regen = self.regen - dt
-		if self.regen < 0 then
-			self.regen = REGEN_TIME
-			spawnSheeps(self, 5)
+	if self.charged then
+		self.checkTime = self.checkTime - dt
+		if self.checkTime < 0 then
+			local sheeps = require "main.sheeps"
+			if sheeps.checkCollision(go.get_position(), MINDIST_SQ) then
+				setCharged(self, false)
+			end
 		end
 	end
-	]]
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("side") then
-		setSide(self, message.side)
+	if message_id == hash("charge") then
+		setCharged(self, true)
 	end
 end

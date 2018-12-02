@@ -13,7 +13,6 @@ local MAX_VISION = 100.0 * 100.0
 function Sheeps.add(sheep_id)
 	table.insert(Sheeps.units, sheep_id)
 	Sheeps.count = Sheeps.count + 1
-	print(Sheeps.count)
 
 	if Sheeps.count == 1 then
 		msg.post(sheep_id, "black")
@@ -101,31 +100,44 @@ function Sheeps.findNearest(to_pos)
 	return sheepId
 end
 
+function Sheeps.checkCollision(to_pos, min_dist_sqr)
+	for _, sid in pairs(Sheeps.units) do
+		local spos = go.get_position(sid)
+		local dist = vmath.length_sqr(to_pos - spos)
+		if dist < min_dist_sqr then
+			return true
+		end
+	end
+
+	return false
+end
+
+function Sheeps.resetFlag()
+	for _, sid in pairs(Sheeps.units) do
+		msg.post(sid, "flagreset")
+	end
+end
+
 function Sheeps.moveFlag(flag_pos)
 
 	local min = -1
-	local sheep = 0
+	local sheepId = nil
 	for _, sid in pairs(Sheeps.units) do
-		--msg.post(sid, "flag", { pos = flag_pos })
 		msg.post(sid, "flagreset")
 		
 		local spos = go.get_position(sid)
 		local dist = vmath.length_sqr(flag_pos - spos)
 		if min < 0 or dist < min then
 			min = dist
-			sheep = sid
+			sheepId = sid
 		end
 	end
 
-	--if sheep ~= 0 then
-	--	msg.post(sheep, "flag", { pos = flag_pos })
-	--end
-
-	if sheep == 0 then
+	if sheepId == nil then
 		return
 	end
 	
-	local sheepPos = go.get_position(sheep)
+	local sheepPos = go.get_position(sheepId)
 
 	for _, sid in pairs(Sheeps.units) do
 		local spos = go.get_position(sid)

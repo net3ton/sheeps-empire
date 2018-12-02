@@ -25,6 +25,8 @@ function update(self, dt)
 		if checkCatch(self, tpos) then
 			go.delete()
 			go.delete(self.target)
+
+			msg.post("/level#script", "eaten")
 			--local sheeps = require "main.sheeps"
 			--sheeps.explosion(self.target)
 			return

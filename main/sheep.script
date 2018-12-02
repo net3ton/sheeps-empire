@@ -37,7 +37,18 @@ function setFlag(self, flag_pos)
 	self.toFlag = 5.0
 end
 
+function collisionFlag(self)
+	local dir = self.pos - self.flag
+	return (vmath.length_sqr(dir) < 100.0)
+end
+
 function updateFlagAccel(self, dt)
+	if collisionFlag(self) then
+		local sheeps = require "main.sheeps"
+		sheeps.resetFlag()
+		return
+	end
+
 	if self.toFlag > 0 then
 		self.toFlag = self.toFlag - dt
 		--local dirvel = self.flag - self.pos

@@ -8,10 +8,12 @@ function init(self)
 	self.sheds = {}
 	self.shedsPos = {}
 
+	self.delay = ENEMY_DELAY
+	self.eaten = 0
+	self.sheeps = 0
+
 	initSheds(self)
 	initSheeps(self)
-
-	self.delay = ENEMY_DELAY
 end
 
 function initSheds(self)
@@ -55,7 +57,21 @@ function getPos(self, num)
 end
 
 function initSheeps(self)
-	msg.post(self.sheds[1], "side", { side = 1 })
+	spawnSheeps(self, self.shedsPos[1], 5)
+
+	local charged = math.random(2, 6)
+	msg.post(self.sheds[charged], "charge")
+end
+
+function chargeSheds(self)
+	for _, sid in pairs(self.sheds) do
+		if go.get(msg.url("main", sid, "script"), "charged") then
+			return
+		end
+	end
+
+	local charged = math.random(1, 6)
+	msg.post(self.sheds[charged], "charge")
 end
 
 function update(self, dt)
@@ -68,8 +84,6 @@ function update(self, dt)
 end
 
 function spawnEnemy(self)
-	print("enemy!")
-
 	local side = math.random(1, 4)
 	local pos = nil
 
@@ -84,4 +98,27 @@ function spawnEnemy(self)
 	end
 
 	factory.create("#fwolfs", pos)
+end
+
+function spawnSheeps(self, topos, shcount)
+	self.sheeps = self.sheeps + shcount
+	msg.post("/flag#script", "new_sheeps", { pos = topos, count = shcount })
+end
+
+function sheepEaten(self)
+	self.eaten = self.eaten + 1
+	self.sheeps = self.sheeps - 1
+	label.set_text("/gui#scores", "Sacrificed: " .. self.eaten)
+
+	if self.sheeps < 10 then
+		chargeSheds(self)
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("spawn_sheeps") then
+		spawnSheeps(self, message.pos, message.count)
+	elseif message_id == hash("eaten") then
+		sheepEaten(self)
+	end
 end
