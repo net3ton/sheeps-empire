@@ -8,6 +8,7 @@ function init(self)
 	self.sheds = {}
 
 	initSheds(self)
+	initSheeps(self)
 end
 
 function initSheds(self)
@@ -49,8 +50,9 @@ function getPos(self, num)
 	return vmath.vector4(x0, y0, x1, y1)
 end
 
---function update(self, dt)
---end
+function initSheeps(self)
+	msg.post("/flag#script", "new_sheeps", { pos = self.sheds[1], count = 5 })
+end
 
---function on_message(self, message_id, message, sender)
+--function update(self, dt)
 --end

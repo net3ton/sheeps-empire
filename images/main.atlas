@@ -13,6 +13,9 @@ images {
 images {
   image: "/images/shed_shadow.png"
 }
+images {
+  image: "/images/sheep_black.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

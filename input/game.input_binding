@@ -2,6 +2,10 @@ key_trigger {
   input: KEY_SPACE
   action: "add"
 }
+key_trigger {
+  input: KEY_Q
+  action: "explo"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT
   action: "mouse_left"

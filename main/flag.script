@@ -17,9 +17,12 @@ function on_input(self, action_id, action)
 	self.mpos.y = action.y / 2
 	
 	if action_id == hash("add") and action.pressed then
+		addSheep(self, self.mpos)
+	end
+
+	if action_id == hash("explo") and action.pressed then
 		local sheeps = require "main.sheeps"
-		local id = factory.create("#factory", self.mpos)
-		sheeps.add(id)
+		sheeps.explo(1)
 	end
 
 	if action_id == hash("mouse_left") and action.pressed then
@@ -27,5 +30,19 @@ function on_input(self, action_id, action)
 		local fpos = vmath.vector3(action.x/2, action.y/2, 0)
 		go.set_position(fpos)
 		sheeps.moveFlag(fpos)
+	end
+end
+
+function addSheep(self, pos)
+	local sheeps = require "main.sheeps"
+	local id = factory.create("#factory", pos)
+	sheeps.add(id)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("new_sheeps") then
+		for i = 1, message.count do
+			addSheep(self, message.pos)
+		end
 	end
 end
