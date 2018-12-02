@@ -26,6 +26,27 @@ function Sheeps.update(dt)
 	end
 end
 
+function Sheeps.explosion(sheepId)
+	local sheepPos = go.get_position(sheepId)
+	local sheedInd = nil
+
+	for ind, sid in pairs(Sheeps.units) do
+		if sid ~= sheepId then
+			local spos = go.get_position(sid)
+			local dist = spos - sheepPos
+
+			local length = vmath.length(dist)
+			local vel = dist * (20000.0 / (length * length))
+			go.set(msg.url("main", sid, "script"), "explo", vel)
+		else
+			sheedInd = ind
+		end
+	end
+
+	table.remove(Sheeps.units, sheedInd)
+	go.delete(sheepId)
+end
+
 function Sheeps.explo(ind)
 	local sheepId = Sheeps.units[ind]
 	local sheepPos = go.get_position(sheepId)
@@ -50,6 +71,21 @@ function Sheeps.explo(ind)
 
 	sheepId = Sheeps.units[ind]
 	msg.post(sheepId, "black")
+end
+
+function Sheeps.findNearest(to_pos)
+	local min = -1
+	local sheepId = nil
+	for _, sid in pairs(Sheeps.units) do
+		local spos = go.get_position(sid)
+		local dist = vmath.length_sqr(to_pos - spos)
+		if min < 0 or dist < min then
+			min = dist
+			sheepId = sid
+		end
+	end
+
+	return sheepId
 end
 
 function Sheeps.moveFlag(flag_pos)

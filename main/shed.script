@@ -1,8 +1,10 @@
 go.property("side", 0)
 
 local CAPTURE_COUNT = 5
+local REGEN_TIME = 10
 
 function init(self)
+	self.regen = 0
 	showFlag(self, self.side);
 end
 
@@ -16,11 +18,28 @@ end
 
 function setSide(self, side)
 	if self.side ~= side and side == 1 then
-		msg.post("/flag#script", "new_sheeps", { pos = go.get_position(), count = CAPTURE_COUNT })
+		spawnSheeps(self, CAPTURE_COUNT)
 	end
 	
 	self.side = side
+	self.regen = REGEN_TIME
 	showFlag(self, side);
+end
+
+function spawnSheeps(self, count)
+	msg.post("/flag#script", "new_sheeps", { pos = go.get_position(), count = count })
+end
+
+function update(self, dt)
+	--[[
+	if self.side == 1 then
+		self.regen = self.regen - dt
+		if self.regen < 0 then
+			self.regen = REGEN_TIME
+			spawnSheeps(self, 5)
+		end
+	end
+	]]
 end
 
 function on_message(self, message_id, message, sender)

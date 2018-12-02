@@ -19,6 +19,9 @@ images {
 images {
   image: "/images/shed_flag.png"
 }
+images {
+  image: "/images/wolf.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

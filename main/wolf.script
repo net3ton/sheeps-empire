@@ -1,0 +1,74 @@
+local BASE_DIR = vmath.vector3(0, 1, 0)
+local CATCH = 10
+
+local MAX_SPEED = 35.0
+local MAX_ACCEL = 100.0
+
+function init(self)
+	self.pos = go.get_position()
+	self.velocity = vmath.vector3()
+	self.accel = vmath.vector3()
+
+	self.target = findTarget(self)
+	self.research = 1.0
+end
+
+function update(self, dt)
+	self.research = self.research - dt
+	if self.research < 0 then
+		self.research = 1.0
+		self.target = findTarget(self)
+	end
+
+	if self.target ~= nil then
+		local tpos = go.get_position(self.target)
+		if checkCatch(self, tpos) then
+			go.delete()
+			local sheeps = require "main.sheeps"
+			sheeps.explosion(self.target)
+			return
+		end
+
+		updateAccel(self, tpos)
+	end
+	
+	self.velocity = self.velocity + self.accel * dt
+	local speed = vmath.length(self.velocity)
+	if speed > MAX_SPEED then
+		self.velocity = self.velocity * (MAX_SPEED / speed)
+	end
+	
+	self.pos = self.pos + self.velocity * dt
+	go.set_position(self.pos)
+
+	if speed > 0 then
+		go.set_rotation(vmath.quat_from_to(BASE_DIR, vmath.normalize(self.velocity)))
+	end
+end
+
+function checkCatch(self, tpos)
+	local x = self.pos.x - tpos.x
+	local y = self.pos.y - tpos.y
+
+	return (x < CATCH and x > -CATCH and y < CATCH and y > -CATCH)
+end
+
+function updateAccel(self, tpos)
+	self.accel = vmath.normalize(tpos - self.pos) * MAX_ACCEL
+end
+
+function findTarget(self)
+	local sheeps = require "main.sheeps"
+	local sheepId = sheeps.findNearest(self.pos)
+	if sheepId == nil then
+		self.accel.x = 0
+		self.accel.y = 0
+		self.velocity.x = 0
+		self.velocity.y = 0
+	end
+
+	return sheepId
+end
+
+--function on_message(self, message_id, message, sender)
+--end
