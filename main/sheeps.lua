@@ -22,6 +22,32 @@ function Sheeps.update(dt)
 	end
 end
 
+function Sheeps.explo(ind)
+	local sheepId = Sheeps.units[ind]
+	local sheepPos = go.get_position(sheepId)
+
+	for _, sid in pairs(Sheeps.units) do
+		if sid ~= sheepId then
+			local spos = go.get_position(sid)
+			local dist = spos - sheepPos
+
+			--local vel = go.get(msg.url("main", sid, "script"), "velocity")
+			--vel = vel + dist * 100.0
+			--go.set(msg.url("main", sid, "script"), "velocity", vel)
+
+			local length = vmath.length(dist)
+			local vel = dist * (20000.0 / (length * length))
+			go.set(msg.url("main", sid, "script"), "explo", vel)
+		end
+	end
+
+	table.remove(Sheeps.units, ind)
+	go.delete(sheepId)
+
+	sheepId = Sheeps.units[ind]
+	msg.post(sheepId, "black")
+end
+
 function Sheeps.moveFlag(flag_pos)
 
 	local min = -1
@@ -108,7 +134,12 @@ function Sheeps.proccess(sheep_id)
 
 					local dir = sheepPos - spos
 					local length = vmath.length(dir)
-					velCollision = velCollision + dir * (MIN_DIST - length)
+					if length > 0 then
+						velCollision = velCollision + dir * (MIN_DIST - length)
+					else
+						velCollision.x = velCollision.x + math.random() * MIN_DIST
+						velCollision.y = velCollision.y + math.random() * MIN_DIST
+					end
 				else
 					-- position centering
 					countCentering = countCentering + 1
