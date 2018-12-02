@@ -28,6 +28,7 @@ function Sheeps.moveFlag(flag_pos)
 	local sheep = 0
 	for _, sid in pairs(Sheeps.units) do
 		--msg.post(sid, "flag", { pos = flag_pos })
+		msg.post(sid, "flagreset")
 		
 		local spos = go.get_position(sid)
 		local dist = vmath.length_sqr(flag_pos - spos)

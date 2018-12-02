@@ -57,6 +57,9 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("flag") then
 		setFlag(self, message.pos)
+	else if message_id == hash("flagreset") then
+		self.toFlag = 0
+	end
 	--elseif message_id == hash("acceleration") then
 	--	updateVelocity(self, message.accel)
 	end
