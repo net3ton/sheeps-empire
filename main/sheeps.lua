@@ -14,6 +14,10 @@ function Sheeps.add(sheep_id)
 	table.insert(Sheeps.units, sheep_id)
 	Sheeps.count = Sheeps.count + 1
 	print(Sheeps.count)
+
+	if Sheeps.count == 1 then
+		msg.post(sheep_id, "black")
+	end
 end
 
 function Sheeps.update(dt)

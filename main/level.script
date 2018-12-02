@@ -6,6 +6,7 @@ function init(self)
 
 	self.size = vmath.vector4(400, 300, 0, 0)
 	self.sheds = {}
+	self.shedsPos = {}
 
 	initSheds(self)
 	initSheeps(self)
@@ -25,9 +26,10 @@ function initSheds(self)
 			local y = math.random((iy-1) * height + yoff, iy * height - yoff * 2)
 
 			local pos = vmath.vector3(x, y, 0)
-			table.insert(self.sheds, pos)
+			table.insert(self.shedsPos, pos)
 			
-			factory.create("#factory", pos)
+			local id = factory.create("#factory", pos)
+			table.insert(self.sheds, id)
 		end
 	end
 
@@ -43,15 +45,15 @@ function initSheds(self)
 end
 
 function getPos(self, num)
-	local x0 = self.sheds[num].x / self.size.y
-	local y0 = self.sheds[num].y / self.size.y
-	local x1 = self.sheds[num+1].x / self.size.y
-	local y1 = self.sheds[num+1].y / self.size.y
+	local x0 = self.shedsPos[num].x / self.size.y
+	local y0 = self.shedsPos[num].y / self.size.y
+	local x1 = self.shedsPos[num+1].x / self.size.y
+	local y1 = self.shedsPos[num+1].y / self.size.y
 	return vmath.vector4(x0, y0, x1, y1)
 end
 
 function initSheeps(self)
-	msg.post("/flag#script", "new_sheeps", { pos = self.sheds[1], count = 5 })
+	msg.post(self.sheds[1], "side", { side = 1 })
 end
 
 --function update(self, dt)

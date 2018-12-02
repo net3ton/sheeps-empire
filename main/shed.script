@@ -1,0 +1,30 @@
+go.property("side", 0)
+
+local CAPTURE_COUNT = 5
+
+function init(self)
+	showFlag(self, self.side);
+end
+
+function showFlag(self, side)
+	if side == 1 then
+		msg.post("#flag", "enable")
+	else
+		msg.post("#flag", "disable")
+	end
+end
+
+function setSide(self, side)
+	if self.side ~= side and side == 1 then
+		msg.post("/flag#script", "new_sheeps", { pos = go.get_position(), count = CAPTURE_COUNT })
+	end
+	
+	self.side = side
+	showFlag(self, side);
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("side") then
+		setSide(self, message.side)
+	end
+end

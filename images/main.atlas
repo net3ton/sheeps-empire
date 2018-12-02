@@ -16,6 +16,9 @@ images {
 images {
   image: "/images/sheep_black.png"
 }
+images {
+  image: "/images/shed_flag.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0
