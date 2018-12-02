@@ -12,9 +12,16 @@ function init(self)
 
 	self.flag = vmath.vector3()
 	self.toFlag = 0
+	self.black = false
 end
 
 function final(self)
+	if self.black then
+		sound.play("#sound_over")
+	else
+		sound.play("#sound_die")
+	end
+
 	local sheeps = require "main.sheeps"
 	sheeps.remove(go.get_id())
 end
@@ -78,6 +85,7 @@ function update(self, dt)
 end
 
 function makeBlack(self)
+	self.black = true
 	msg.post("#sprite", "play_animation", { id = hash("sheep_black") })
 end
 

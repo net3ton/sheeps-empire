@@ -29,6 +29,7 @@ function setCharged(self, charge)
 end
 
 function makeSheeps(self)
+	sound.play("#sound_spawn")
 	msg.post("/level#script", "spawn_sheeps", { pos = go.get_position(), count = SPAWN_COUNT })
 end
 
