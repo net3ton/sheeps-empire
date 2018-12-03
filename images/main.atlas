@@ -22,6 +22,9 @@ images {
 images {
   image: "/images/wolf.png"
 }
+images {
+  image: "/images/sheep_dead.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

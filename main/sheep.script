@@ -23,7 +23,7 @@ function final(self)
 		sound.play("#sound_die")
 	end
 
-	msg.post("/level#script", "eaten", { black = self.black })
+	msg.post("/level#script", "eaten", { black = self.black, pos = self.pos })
 end
 
 function updateVelocity(self, accel)

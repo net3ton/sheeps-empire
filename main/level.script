@@ -110,11 +110,13 @@ function spawnSheeps(self, topos, shcount)
 	msg.post("/flag#script", "new_sheeps", { pos = topos, count = shcount })
 end
 
-function sheepEaten(self, is_black)
+function sheepEaten(self, pos, is_black)
 	if is_black then
 		onGameOver(self)
 		return
 	end
+
+	factory.create("#ftombs", pos)
 	
 	self.eaten = self.eaten + 1
 	self.sheeps = self.sheeps - 1
@@ -136,6 +138,6 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("spawn_sheeps") then
 		spawnSheeps(self, message.pos, message.count)
 	elseif message_id == hash("eaten") then
-		sheepEaten(self, message.black)
+		sheepEaten(self, message.pos, message.black)
 	end
 end
