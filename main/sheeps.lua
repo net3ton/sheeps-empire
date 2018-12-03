@@ -119,7 +119,6 @@ function Sheeps.resetFlag()
 end
 
 function Sheeps.moveFlag(flag_pos)
-
 	local min = -1
 	local sheepId = nil
 	for _, sid in pairs(Sheeps.units) do

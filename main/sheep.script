@@ -16,14 +16,14 @@ function init(self)
 end
 
 function final(self)
+	local sheeps = require "main.sheeps"
+	sheeps.remove(go.get_id())
+
 	if self.black then
 		sound.play("#sound_over")
 	else
 		sound.play("#sound_die")
 	end
-
-	local sheeps = require "main.sheeps"
-	sheeps.remove(go.get_id())
 end
 
 function updateVelocity(self, accel)
@@ -50,17 +50,17 @@ function collisionFlag(self)
 end
 
 function updateFlagAccel(self, dt)
-	if collisionFlag(self) then
-		local sheeps = require "main.sheeps"
-		sheeps.resetFlag()
-		return
-	end
+	--if collisionFlag(self) then
+	--	local sheeps = require "main.sheeps"
+	--	sheeps.resetFlag()
+	--	return
+	--end
 
 	if self.toFlag > 0 then
 		self.toFlag = self.toFlag - dt
-		--local dirvel = self.flag - self.pos
-		--local accelFlag = vmath.normalize(dirvel - self.velocity) * MAX_ACCEL
-		local accelFlag = vmath.normalize(self.flag - self.pos) * MAX_ACCEL
+		local dirvel = self.flag - self.pos
+		local accelFlag = vmath.normalize(dirvel - self.velocity) * MAX_ACCEL
+		--local accelFlag = vmath.normalize(self.flag - self.pos) * MAX_ACCEL
 		self.accel = self.accel * 0.5 + accelFlag * 1.5
 	end
 end

@@ -78,8 +78,12 @@ function update(self, dt)
 	self.delay = self.delay - dt
 
 	if self.delay < 0 then
-		self.delay = ENEMY_DELAY
 		spawnEnemy(self)
+
+		self.delay = ENEMY_DELAY - self.eaten
+		if self.delay < 3 then
+			self.delay = 3
+		end
 	end
 end
 

@@ -72,6 +72,3 @@ function findTarget(self)
 
 	return sheepId
 end
-
---function on_message(self, message_id, message, sender)
---end
