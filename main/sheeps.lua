@@ -2,6 +2,7 @@ local Sheeps = {}
 
 Sheeps.units = {}
 Sheeps.count = 0
+Sheeps.score = 0
 
 local MAX_SPEED = 30.0
 local MAX_ACCEL = 25.0
@@ -13,6 +14,7 @@ local MAX_VISION = 100.0 * 100.0
 function Sheeps.restart()
 	Sheeps.units = {}
 	Sheeps.count = 0
+	Sheeps.score = 0
 end
 
 function Sheeps.add(sheep_id)

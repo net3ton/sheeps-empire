@@ -3,6 +3,9 @@ function init(self)
 
 	local res = vmath.vector4(800, 600, 0.5, 0)
 	sprite.set_constant("/back#sprite", "resolution", res)
+
+	local sheeps = require "main.sheeps"
+	label.set_text("/score#label", "You sacrificed: " .. sheeps.score)
 end
 
 function final(self)

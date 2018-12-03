@@ -126,6 +126,9 @@ function sheepEaten(self, is_black)
 end
 
 function onGameOver(self)
+	local sheeps = require "main.sheeps"
+	sheeps.score = self.eaten
+
 	msg.post("main:/loader#script", "game_over")
 end
 
