@@ -11,6 +11,8 @@ function init(self)
 
 	self.target = findTarget(self)
 	self.research = 1.0
+
+	sound.play("#sound_new")
 end
 
 function update(self, dt)

@@ -19,9 +19,7 @@ function final(self)
 	local sheeps = require "main.sheeps"
 	sheeps.remove(go.get_id())
 
-	if self.black then
-		sound.play("#sound_over")
-	else
+	if not self.black then
 		sound.play("#sound_die")
 	end
 

@@ -6,6 +6,8 @@ function init(self)
 
 	local sheeps = require "main.sheeps"
 	label.set_text("/score#label", "You sacrificed: " .. sheeps.score)
+
+	sound.play("/back#sound_over")
 end
 
 function final(self)
@@ -14,8 +16,7 @@ end
 
 function on_input(self, action_id, action)
 	if action_id == hash("mouse_left") and action.pressed then
-		--sound.play("#sound_pos")
-
+		sound.play("/back#sound_next")
 		msg.post("main:/loader#script", "restart_game")
 	end
 end
