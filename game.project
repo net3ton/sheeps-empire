@@ -3,7 +3,7 @@ title = Sheeps Empire
 version = 0.1
 
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /levels/main.collectionc
 render = /render/render.renderc
 
 [input]

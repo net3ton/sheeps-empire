@@ -65,7 +65,7 @@ end
 
 function chargeSheds(self)
 	for _, sid in pairs(self.sheds) do
-		if go.get(msg.url("main", sid, "script"), "charged") then
+		if go.get(msg.url("stage", sid, "script"), "charged") then
 			return
 		end
 	end

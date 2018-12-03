@@ -176,14 +176,14 @@ function Sheeps.proccess(sheep_id)
 	local countCentering = 0
 	local countCollision = 0
 
-	local sheedUrl = msg.url("main", sheep_id, "script")
+	local sheedUrl = msg.url("stage", sheep_id, "script")
 	local sheepPos = go.get_position(sheep_id)
 	local sheepVel = go.get(sheedUrl, "velocity")
 
 	for _, sid in pairs(Sheeps.units) do
 		if sid ~= sheep_id then
 			local spos = go.get_position(sid)
-			local svel = go.get(msg.url("main", sid, "script"), "velocity")
+			local svel = go.get(msg.url("stage", sid, "script"), "velocity")
 
 			if Sheeps.inVision(sheepPos, spos) then
 				countVision = countVision + 1

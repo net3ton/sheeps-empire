@@ -1,0 +1,49 @@
+local L_START = "#start"
+local L_STAGE = "#stage"
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+
+	self.current = ""
+	self.levelToLoad = ""
+
+	load_level(self, L_START)
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function load_level(self, id)
+	if not (self.current == "") then
+		self.levelToLoad = id
+		msg.post(self.current, "unload")
+	else
+		goto_level(self, id)
+	end
+end
+
+function on_level_unloaded(self)
+	if not (self.levelToLoad == "") then
+		goto_level(self, self.levelToLoad)
+		self.levelToLoad = ""
+	elseif not (self.current == "") then
+		goto_level(self, self.current)
+	end
+end
+
+function goto_level(self, id)
+	self.current = id
+	msg.post(id, "load")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("proxy_loaded") then
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
+	elseif message_id == hash("proxy_unloaded") then
+		on_level_unloaded(self)
+	elseif message_id == hash("start_game") then
+		load_level(self, L_STAGE)
+	end
+end

@@ -1,4 +1,4 @@
-name: "main"
+name: "stage"
 instances {
   id: "flag"
   prototype: "/main/flag.go"
