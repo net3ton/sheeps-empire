@@ -79,7 +79,7 @@ embedded_instances {
   ""
   position {
     x: 30.0
-    y: 260.0
+    y: 230.0
     z: 0.0
   }
   rotation {
@@ -173,7 +173,7 @@ embedded_instances {
   ""
   position {
     x: 30.0
-    y: 230.0
+    y: 200.0
     z: 0.0
   }
   rotation {
@@ -228,7 +228,7 @@ embedded_instances {
   "pivot: PIVOT_W\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "line_break: false\\n"
-  "text: \\\"Evel sheep (and hungry)\\\"\\n"
+  "text: \\\"Pure evil sheep (and hungry)\\\"\\n"
   "font: \\\"/render/label.font\\\"\\n"
   "material: \\\"/render/label.material\\\"\\n"
   "\"\n"
@@ -267,7 +267,7 @@ embedded_instances {
   ""
   position {
     x: 30.0
-    y: 200.0
+    y: 170.0
     z: 0.0
   }
   rotation {
@@ -302,7 +302,7 @@ embedded_instances {
   "color {\\n"
   "  x: 1.0\\n"
   "  y: 1.0\\n"
-  "  z: 1.0\\n"
+  "  z: 0.3019608\\n"
   "  w: 1.0\\n"
   "}\\n"
   "outline {\\n"
@@ -341,7 +341,7 @@ embedded_instances {
   ""
   position {
     x: 200.0
-    y: 30.0
+    y: 20.0
     z: 0.0
   }
   rotation {
@@ -391,7 +391,7 @@ embedded_instances {
   "  z: 0.0\\n"
   "  w: 1.0\\n"
   "}\\n"
-  "leading: 1.0\\n"
+  "leading: 1.2\\n"
   "tracking: 0.0\\n"
   "pivot: PIVOT_W\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
@@ -419,7 +419,7 @@ embedded_instances {
   ""
   position {
     x: 15.0
-    y: 163.0
+    y: 97.0
     z: 0.0
   }
   rotation {
@@ -608,7 +608,7 @@ embedded_instances {
   ""
   position {
     x: 30.0
-    y: 92.0
+    y: 137.0
     z: 0.0
   }
   rotation {
@@ -660,10 +660,12 @@ embedded_instances {
   "}\\n"
   "leading: 1.0\\n"
   "tracking: 0.0\\n"
-  "pivot: PIVOT_CENTER\\n"
+  "pivot: PIVOT_E\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "line_break: false\\n"
-  "text: \\\"by @net3ton for LD34\\\"\\n"
+  "text: \\\"#LD34\\\\n"
+  "\\\"\\n"
+  "  \\\"@net3ton\\\"\\n"
   "font: \\\"/render/label.font\\\"\\n"
   "material: \\\"/render/label.material\\\"\\n"
   "\"\n"
@@ -681,8 +683,82 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 327.0
-    y: -38.0
+    x: 397.0
+    y: 17.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "title"
+  data: "embedded_components {\n"
+  "  id: \"label\"\n"
+  "  type: \"label\"\n"
+  "  data: \"size {\\n"
+  "  x: 128.0\\n"
+  "  y: 32.0\\n"
+  "  z: 0.0\\n"
+  "  w: 0.0\\n"
+  "}\\n"
+  "scale {\\n"
+  "  x: 1.0\\n"
+  "  y: 1.0\\n"
+  "  z: 1.0\\n"
+  "  w: 0.0\\n"
+  "}\\n"
+  "color {\\n"
+  "  x: 1.0\\n"
+  "  y: 1.0\\n"
+  "  z: 1.0\\n"
+  "  w: 1.0\\n"
+  "}\\n"
+  "outline {\\n"
+  "  x: 0.0\\n"
+  "  y: 0.0\\n"
+  "  z: 0.0\\n"
+  "  w: 1.0\\n"
+  "}\\n"
+  "shadow {\\n"
+  "  x: 0.0\\n"
+  "  y: 0.0\\n"
+  "  z: 0.0\\n"
+  "  w: 1.0\\n"
+  "}\\n"
+  "leading: 1.0\\n"
+  "tracking: 0.0\\n"
+  "pivot: PIVOT_CENTER\\n"
+  "blend_mode: BLEND_MODE_ALPHA\\n"
+  "line_break: false\\n"
+  "text: \\\"Sheeps Emire\\\"\\n"
+  "font: \\\"/render/label.font\\\"\\n"
+  "material: \\\"/render/label.material\\\"\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 200.0
+    y: 270.0
     z: 0.0
   }
   rotation {

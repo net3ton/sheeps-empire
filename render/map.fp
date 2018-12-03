@@ -48,5 +48,5 @@ void main()
 	else
 		color = vec3(.11, .37, .13) + min_dist;
 	
-	gl_FragColor = vec4(color, 1.0);
+	gl_FragColor = vec4(color * resolution.z, 1.0);
 }

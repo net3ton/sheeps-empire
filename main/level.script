@@ -41,7 +41,8 @@ function initSheds(self)
 	go.set("#back", "scale.y", self.size.y)
 	go.set_position(vmath.vector3(self.size.x/2, self.size.y/2, 0))
 
-	sprite.set_constant("#back", "resolution", self.size * 2)
+	local res = vmath.vector4(self.size.x * 2, self.size.y * 2, 1.0, 0)
+	sprite.set_constant("#back", "resolution", res)
 
 	sprite.set_constant("#back", "shed0", getPos(self, 1))
 	sprite.set_constant("#back", "shed1", getPos(self, 3))
