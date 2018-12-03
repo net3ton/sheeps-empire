@@ -1,5 +1,6 @@
 local L_START = "#start"
 local L_STAGE = "#stage"
+local L_END = "#end"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -45,5 +46,11 @@ function on_message(self, message_id, message, sender)
 		on_level_unloaded(self)
 	elseif message_id == hash("start_game") then
 		load_level(self, L_STAGE)
+	elseif message_id == hash("game_over") then
+		load_level(self, L_END)
+	elseif message_id == hash("restart_game") then
+		local sheeps = require "main.sheeps"
+		sheeps.restart()
+		load_level(self, L_START)
 	end
 end

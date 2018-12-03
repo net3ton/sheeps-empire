@@ -10,6 +10,11 @@ local MIN_DIST = 15.0
 local MIN_DIST_S = MIN_DIST * MIN_DIST
 local MAX_VISION = 100.0 * 100.0
 
+function Sheeps.restart()
+	Sheeps.units = {}
+	Sheeps.count = 0
+end
+
 function Sheeps.add(sheep_id)
 	table.insert(Sheeps.units, sheep_id)
 	Sheeps.count = Sheeps.count + 1
