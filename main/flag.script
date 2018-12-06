@@ -1,6 +1,6 @@
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	self.mpos = vmath.vector3()
+	--self.mpos = vmath.vector3()
 end
 
 function final(self)
@@ -13,12 +13,12 @@ function update(self, dt)
 end
 
 function on_input(self, action_id, action)
-	self.mpos.x = action.x / 2
-	self.mpos.y = action.y / 2
+	--self.mpos.x = action.x / 2
+	--self.mpos.y = action.y / 2
 	
-	if action_id == hash("add") and action.pressed then
-		addSheep(self, self.mpos)
-	end
+	--if action_id == hash("add") and action.pressed then
+	--	addSheep(self, self.mpos)
+	--end
 
 	--if action_id == hash("explo") and action.pressed then
 	--	local sheeps = require "main.sheeps"
@@ -26,12 +26,23 @@ function on_input(self, action_id, action)
 	--end
 
 	if action_id == hash("mouse_left") and action.pressed then
-		go.set_position(self.mpos)
-		sound.play("#sound_pos")
-
-		local sheeps = require "main.sheeps"
-		sheeps.moveFlag(self.mpos)
+		setFlagPos(self, action.x / 2, action.y / 2)
+	elseif action_id == hash("touch") then
+		local touch = action.touch[1]
+		if touch.pressed then
+			setFlagPos(self, touch.x / 2, touch.y / 2)
+		end
 	end
+end
+
+function setFlagPos(self, px, py)
+	local fpos = vmath.vector3(px, py, 0)
+	
+	go.set_position(fpos)
+	sound.play("#sound_pos")
+
+	local sheeps = require "main.sheeps"
+	sheeps.moveFlag(fpos)
 end
 
 function addSheep(self, pos)

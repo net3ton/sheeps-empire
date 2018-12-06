@@ -10,3 +10,7 @@ mouse_trigger {
   input: MOUSE_BUTTON_LEFT
   action: "mouse_left"
 }
+touch_trigger {
+  input: TOUCH_MULTI
+  action: "touch"
+}
