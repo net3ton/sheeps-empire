@@ -41,7 +41,7 @@ end
 
 function setFlag(self, flag_pos)
 	self.flag = flag_pos
-	self.toFlag = 5.0
+	self.toFlag = 10.0
 end
 
 function collisionFlag(self)

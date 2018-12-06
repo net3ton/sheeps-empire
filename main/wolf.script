@@ -22,7 +22,7 @@ function update(self, dt)
 		self.target = findTarget(self)
 	end
 
-	if self.target ~= nil then
+	if self.target ~= nil and pcall(go.get_position, self.target) then
 		local tpos = go.get_position(self.target)
 		if checkCatch(self, tpos) then
 			go.delete()
@@ -63,12 +63,12 @@ end
 function findTarget(self)
 	local sheeps = require "main.sheeps"
 	local sheepId = sheeps.findNearest(self.pos)
-	if sheepId == nil then
-		self.accel.x = 0
-		self.accel.y = 0
-		self.velocity.x = 0
-		self.velocity.y = 0
-	end
+	--if sheepId == nil then
+		--self.accel.x = 0
+		--self.accel.y = 0
+		--self.velocity.x = 0
+		--self.velocity.y = 0
+	--end
 
 	return sheepId
 end
