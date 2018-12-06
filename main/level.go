@@ -14,7 +14,7 @@ components {
   }
 }
 embedded_components {
-  id: "factory"
+  id: "fsheds"
   type: "factory"
   data: "prototype: \"/main/shed.go\"\n"
   "load_dynamically: false\n"
@@ -73,6 +73,24 @@ embedded_components {
   id: "ftombs"
   type: "factory"
   data: "prototype: \"/main/tombstone.go\"\n"
+  "load_dynamically: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "fsheeps"
+  type: "factory"
+  data: "prototype: \"/main/sheep.go\"\n"
   "load_dynamically: false\n"
   ""
   position {

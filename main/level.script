@@ -32,7 +32,7 @@ function initSheds(self)
 			local pos = vmath.vector3(x, y, 0)
 			table.insert(self.shedsPos, pos)
 			
-			local id = factory.create("#factory", pos)
+			local id = factory.create("#fsheds", pos)
 			table.insert(self.sheds, id)
 		end
 	end
@@ -86,6 +86,9 @@ function update(self, dt)
 			self.delay = 3
 		end
 	end
+
+	local sheeps = require "main.sheeps"
+	sheeps.update(dt)
 end
 
 function spawnEnemy(self)
@@ -106,8 +109,14 @@ function spawnEnemy(self)
 end
 
 function spawnSheeps(self, topos, shcount)
+	local sheeps = require "main.sheeps"
+
+	for i = 1, shcount do
+		local id = factory.create("#fsheeps", topos)
+		sheeps.add(id)
+	end
+
 	self.sheeps = self.sheeps + shcount
-	msg.post("/flag#script", "new_sheeps", { pos = topos, count = shcount })
 end
 
 function sheepEaten(self, pos, is_black)
