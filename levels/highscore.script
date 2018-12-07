@@ -1,0 +1,14 @@
+--function init(self)
+--end
+
+function setValues(self, num, name, score)
+	label.set_text("#num", "" .. num .. ".")
+	label.set_text("#name", name)
+	label.set_text("#score", "" .. score)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("info") then
+		setValues(self, message.num, message.name, message.score)
+	end
+end
