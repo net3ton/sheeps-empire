@@ -9,9 +9,6 @@ function init(self)
 	self.current = ""
 	self.levelToLoad = ""
 
-	local sheeps = require "main.sheeps"
-	sheeps.score = 12
-	
 	load_level(self, L_START)
 end
 
