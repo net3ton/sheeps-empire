@@ -6,16 +6,16 @@ function init(self)
 	local res = vmath.vector4(800, 600, 0.5, 0)
 	sprite.set_constant("/back#sprite", "resolution", res)
 
-	local sheeps = require "main.sheeps"
-	label.set_text("/score#value", "" .. sheeps.score)
-
 	sound.play("/back#sound_over")
 
 	self.blink = BLINK_TIME
 	self.blinkShow = true
 
 	self.name = ""
-	setName(self, "Player1")
+
+	local sheeps = require "main.sheeps"
+	label.set_text("/score#value", "" .. sheeps.score)
+	setName(self, sheeps.name)
 end
 
 function final(self)
@@ -43,6 +43,15 @@ function update(self, dt)
 	end
 end
 
+function goNext(self)
+	sound.play("/back#sound_next")
+
+	local sheeps = require "main.sheeps"
+	sheeps.name = self.name
+
+	msg.post("main:/loader#script", "leaders")
+end
+
 function on_input(self, action_id, action)
 	if action_id == hash("mouse_left") and action.pressed then
 		--sound.play("/back#sound_next")
@@ -54,7 +63,6 @@ function on_input(self, action_id, action)
 		local name = string.sub(self.name, 0, len - 1)
 		setName(self, name)
 	elseif action_id == hash("enter") and action.pressed then
-		sound.play("/back#sound_next")
-		msg.post("main:/loader#script", "leaders")
+		goNext(self)
 	end
 end

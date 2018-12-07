@@ -3,6 +3,7 @@ local Sheeps = {}
 Sheeps.units = {}
 Sheeps.count = 0
 Sheeps.score = 0
+Sheeps.name = "Player1"
 
 local MAX_SPEED = 30.0
 local MAX_ACCEL = 25.0

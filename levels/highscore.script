@@ -1,5 +1,6 @@
---function init(self)
---end
+local COLOR_PLAYER = vmath.vector4(1.0, 1.0, 0.3, 1.0)
+local COLOR_ONE = vmath.vector4(1.0, 1.0, 0.8, 1.0)
+local COLOR_TWO = vmath.vector4(1.0, 1.0, 1.0, 1.0)
 
 function setValues(self, num, name, score)
 	label.set_text("#num", "" .. num .. ".")
@@ -7,8 +8,25 @@ function setValues(self, num, name, score)
 	label.set_text("#score", "" .. score)
 end
 
+function setColor(self, color)
+	go.set("#num", "color", color)
+	go.set("#name", "color", color)
+	go.set("#score", "color", color)
+end
+
+function setColorType(self, type)
+	if type == 0 then
+		setColor(self, COLOR_PLAYER)
+	elseif type == 1 then
+		setColor(self, COLOR_ONE)
+	elseif type == 2 then
+		setColor(self, COLOR_TWO)
+	end
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("info") then
 		setValues(self, message.num, message.name, message.score)
+		setColorType(self, message.color)
 	end
 end
