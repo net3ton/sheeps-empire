@@ -6,7 +6,8 @@ from gevent.server import StreamServer
 from geventwebsocket.handler import WebSocketHandler
 
 REG_INPUT = re.compile("name=([A-z0-9\-\_\.]*)&score=([0-9]*)")
-COUNT_LEADERS = 10
+COUNT_LEADERS = 14
+MAX_PLAYERS = 0xFFFFFFFF
 
 REDIS = redis.StrictRedis(host='localhost', port=6379, db=0)
 REDIS_KEY = "sheepsempire"
@@ -14,7 +15,7 @@ REDIS_KEY = "sheepsempire"
 print("sheeps empire server...")
 
 def make_pkey(pid, name):
-    return "%08X:%s" % (pid, name)
+    return "%08X:%s" % (MAX_PLAYERS - pid, name)
 
 def get_name_from_pkey(pkey):
     ind = pkey.find(":")
@@ -29,12 +30,15 @@ def prepare_result(name, score):
     REDIS.zadd(REDIS_KEY, { pkey: score })
     REDIS.save()
 
-    leaders = REDIS.zrevrange(REDIS_KEY, 0, COUNT_LEADERS-1, withscores=True)
-    around = []
-
     pos = REDIS.zrevrank(REDIS_KEY, pkey)
-    if pos >= COUNT_LEADERS:
+    countLeaders = COUNT_LEADERS
+
+    around = []
+    if pos >= countLeaders:
         around = REDIS.zrevrange(REDIS_KEY, pos-1, pos+1, withscores=True)
+        countLeaders -= 4
+
+    leaders = REDIS.zrevrange(REDIS_KEY, 0, countLeaders-1, withscores=True)
 
     # prepare
     data = {}

@@ -100,7 +100,7 @@ embedded_instances {
   "pivot: PIVOT_CENTER\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "line_break: false\\n"
-  "text: \\\"Tap to restart\\\"\\n"
+  "text: \\\"Enter / Tap to restart\\\"\\n"
   "font: \\\"/render/label.font\\\"\\n"
   "material: \\\"/render/label.material\\\"\\n"
   "\"\n"
