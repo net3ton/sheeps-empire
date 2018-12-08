@@ -33,6 +33,11 @@ function setName(self, name)
 	label.set_text("/name#value", text)
 end
 
+function checkChar(char)
+	local ok = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.-_1234567890"
+	return string.find(ok, char, 1, true) ~= nil
+end
+
 function update(self, dt)
 	self.blink = self.blink - dt
 	if self.blink <= 0 then
@@ -57,7 +62,10 @@ function on_input(self, action_id, action)
 		--sound.play("/back#sound_next")
 		--msg.post("main:/loader#script", "restart_game")
 	elseif action_id == hash("type") then
-		setName(self, self.name .. action.text)
+		local char = action.text
+		if checkChar(char) then
+			setName(self, self.name .. char)
+		end
 	elseif action_id == hash("backspace") and action.repeated then
 		local len = string.len(self.name)
 		local name = string.sub(self.name, 0, len - 1)
