@@ -13,6 +13,8 @@ function init(self)
 	self.flag = vmath.vector3()
 	self.toFlag = 0
 	self.black = false
+
+	self.shadow = factory.create("/level#fshadow", self.pos)
 end
 
 function final(self)
@@ -24,6 +26,7 @@ function final(self)
 	end
 
 	msg.post("/level#script", "eaten", { black = self.black, pos = self.pos })
+	go.delete(self.shadow)
 end
 
 function updateVelocity(self, accel)
@@ -76,9 +79,10 @@ function update(self, dt)
 
 	--self.pos = self.pos + self.explo * dt
 	--self.explo = self.explo * 0.5
-	
+
 	go.set_rotation(vmath.quat_from_to(BASE_DIR, self.dir))
 	go.set_position(self.pos)
+	go.set_position(self.pos, self.shadow)
 
 	--local size = (vmath.length(self.explo) + 1) / 300
 	--if size < 1 then

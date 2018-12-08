@@ -25,6 +25,9 @@ images {
 images {
   image: "/images/sheep_dead.png"
 }
-margin: 0
+images {
+  image: "/images/sheep_shadow.png"
+}
+margin: 1
 extrude_borders: 0
 inner_padding: 0

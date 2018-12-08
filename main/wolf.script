@@ -12,7 +12,12 @@ function init(self)
 	self.target = findTarget(self)
 	self.research = 1.0
 
+	self.shadow = factory.create("/level#fshadow", self.pos)
 	sound.play("#sound_new")
+end
+
+function final(self)
+	go.delete(self.shadow)
 end
 
 function update(self, dt)
@@ -43,6 +48,7 @@ function update(self, dt)
 	
 	self.pos = self.pos + self.velocity * dt
 	go.set_position(self.pos)
+	go.set_position(self.pos, self.shadow)
 
 	if speed > 0 then
 		go.set_rotation(vmath.quat_from_to(BASE_DIR, vmath.normalize(self.velocity)))
