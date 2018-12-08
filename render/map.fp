@@ -8,7 +8,17 @@ uniform lowp vec4 shed0;
 uniform lowp vec4 shed1;
 uniform lowp vec4 shed2;
 
+float PHI = 1.61803398874989484820459 * 00000.1; // Golden Ratio   
+float PI  = 3.14159265358979323846264 * 00000.1; // PI
+float SQ2 = 1.41421356237309504880169 * 10000.0; // Square Root of Two
+
+// gold_noise
 float rand(vec2 co){
+	float seed = 1.0;
+	return fract(tan(distance(co*(seed+PHI), vec2(PHI, PI)))*SQ2);
+}
+
+float rand1(vec2 co){
 	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
@@ -34,7 +44,6 @@ void main()
 	point[5] = shed2.zw;
 
 	vec3 color = vec3(.11, .37, .13);
-	//vec3 color = vec3(.05, .17, .06);
 	float min_dist = 1.0;
 	
 	for (int i=0; i<6; i++)
@@ -46,7 +55,7 @@ void main()
 	if (rand(st) > 0.5)
 		color += min_dist/1.5;
 	else
-		color = vec3(.11, .37, .13) + min_dist;
+		color += min_dist;
 	
 	gl_FragColor = vec4(color * resolution.z, 1.0);
 }
