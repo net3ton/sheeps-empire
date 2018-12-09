@@ -76,6 +76,41 @@ function Sheeps.resetFlag()
 end
 
 function Sheeps.moveFlag(flag_pos)
+	for _, sid in pairs(Sheeps.units) do
+
+		local sheepPos = go.get_position(sid)
+		local sheepDir = vmath.normalize(sheepPos - flag_pos)
+		local sheepDist = vmath.length(sheepPos - flag_pos)
+		local collision = false
+
+		for _, cid in pairs(Sheeps.units) do
+			if cid ~= sid then
+
+				local collisionPos = go.get_position(cid)
+				local collisionVect = collisionPos - flag_pos
+				local proj = vmath.dot(collisionVect, sheepDir)
+
+				if proj < sheepDist then
+					local projPos = flag_pos + sheepDir * proj
+					local dist = vmath.length_sqr(projPos - collisionPos)
+					if dist < 100 then
+						collision = true
+						break
+					end
+				end
+			end
+		end
+
+		if collision then
+			msg.post(sid, "flagreset")
+		else
+			msg.post(sid, "flag", { pos = flag_pos })
+		end
+	end
+end
+
+--[[
+function Sheeps.moveFlag(flag_pos)
 	local min = -1
 	local sheepId = nil
 	for _, sid in pairs(Sheeps.units) do
@@ -103,6 +138,7 @@ function Sheeps.moveFlag(flag_pos)
 		end
 	end
 end
+]]
 
 function Sheeps.inVision(one_pos, two_pos)
 	return vmath.length_sqr(one_pos - two_pos) < MAX_VISION
