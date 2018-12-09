@@ -73,6 +73,8 @@ function Sheeps.resetFlag()
 	for _, sid in pairs(Sheeps.units) do
 		msg.post(sid, "flagreset")
 	end
+
+	msg.post("/flag#sprite", "disable")
 end
 
 function Sheeps.moveFlag(flag_pos)
