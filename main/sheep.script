@@ -13,6 +13,7 @@ function init(self)
 	self.toFlag = 0
 	self.black = false
 
+	self.respos = vmath.vector3(0, 0, math.random() * 0.1)
 	self.lightpos = vmath.vector4(0, 0, 20, 20)
 	self.shadow = factory.create("/level#fshadow", self.pos)
 end
@@ -81,14 +82,27 @@ function update(self, dt)
 
 	self.pos = self.pos + self.velocity * dt
 
+	-- handle z-fighting
+	self.respos.x = self.pos.x
+	self.respos.y = self.pos.y
+
 	go.set_rotation(vmath.quat_from_to(BASE_DIR, self.dir))
-	go.set_position(self.pos)
-	go.set_position(self.pos, self.shadow)
+	go.set_position(self.respos)
+	go.set_position(self.respos, self.shadow)
 
 	-- shader fake lighting
 	self.lightpos.x = self.pos.x - 5.0
 	self.lightpos.y = self.pos.y - 7.0
 	sprite.set_constant("#sprite", "possize", self.lightpos)
+
+	--[[
+	local tint = vmath.vector4(1.0, 1.0, 1.0, 0.5)
+	if self.toFlag > 0 then
+		tint.w = 1.0
+	end
+
+	sprite.set_constant("#sprite", "tint", tint)
+	]]
 end
 
 function makeBlack(self)

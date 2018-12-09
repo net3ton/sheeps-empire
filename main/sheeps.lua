@@ -233,6 +233,7 @@ function Sheeps.proccess(sheep_id)
 	end
 
 	local accel = accelAligment * 0.5 + accelCentering * 1.0 + accelCollision * 1.5
+	accel.z = 0
 	go.set(sheedUrl, "accel", accel)
 end
 
