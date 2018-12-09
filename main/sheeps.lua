@@ -5,8 +5,8 @@ Sheeps.count = 0
 Sheeps.score = 0
 Sheeps.name = "Player1"
 
-local MAX_SPEED = 30.0
-local MAX_ACCEL = 25.0
+local MAX_SPEED = 40.0 -- 30
+local MAX_ACCEL = 60.0 -- 25
 
 local MIN_DIST = 15.0
 local MIN_DIST_S = MIN_DIST * MIN_DIST
@@ -232,7 +232,7 @@ function Sheeps.proccess(sheep_id)
 		end
 	end
 
-	local accel = accelAligment * 0.5 + accelCentering * 1.0 + accelCollision * 1.5
+	local accel = accelAligment * 0.5 + accelCentering * 0.5 + accelCollision * 1.0
 	accel.z = 0
 	go.set(sheedUrl, "accel", accel)
 end
