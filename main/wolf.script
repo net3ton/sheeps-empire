@@ -13,6 +13,7 @@ function init(self)
 	self.research = 1.0
 
 	self.shadow = factory.create("/level#fshadow", self.pos)
+	self.lightpos = vmath.vector4(0, 0, 20, 20)
 	sound.play("#sound_new")
 end
 
@@ -32,8 +33,6 @@ function update(self, dt)
 		if checkCatch(self, tpos) then
 			go.delete()
 			go.delete(self.target)
-			--local sheeps = require "main.sheeps"
-			--sheeps.explosion(self.target)
 			return
 		end
 
@@ -49,6 +48,11 @@ function update(self, dt)
 	self.pos = self.pos + self.velocity * dt
 	go.set_position(self.pos)
 	go.set_position(self.pos, self.shadow)
+
+	-- shader fake lighting
+	self.lightpos.x = self.pos.x - 5.0
+	self.lightpos.y = self.pos.y - 7.0
+	sprite.set_constant("#sprite", "possize", self.lightpos)
 
 	if speed > 0 then
 		go.set_rotation(vmath.quat_from_to(BASE_DIR, vmath.normalize(self.velocity)))

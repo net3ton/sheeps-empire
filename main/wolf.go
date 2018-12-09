@@ -18,7 +18,7 @@ embedded_components {
   type: "sprite"
   data: "tile_set: \"/images/main.atlas\"\n"
   "default_animation: \"wolf\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
+  "material: \"/render/sheep.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
