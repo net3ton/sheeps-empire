@@ -13,6 +13,7 @@ function init(self)
 	self.toFlag = 0
 	self.black = false
 
+	self.lightpos = vmath.vector4(0, 0, 20, 20)
 	self.shadow = factory.create("/level#fshadow", self.pos)
 end
 
@@ -83,6 +84,11 @@ function update(self, dt)
 	go.set_rotation(vmath.quat_from_to(BASE_DIR, self.dir))
 	go.set_position(self.pos)
 	go.set_position(self.pos, self.shadow)
+
+	-- shader fake lighting
+	self.lightpos.x = self.pos.x - 5.0
+	self.lightpos.y = self.pos.y - 7.0
+	sprite.set_constant("#sprite", "possize", self.lightpos)
 end
 
 function makeBlack(self)
